@@ -18,19 +18,12 @@ pipeline {
         }
         stage('Test') {
             steps {
-                sshagent(credentials: ['your-ssh-credentials-id']) {
                     sh 'mvn test'
-                }
-            }
-            post {
-                always {
-                    junit 'target/surefire-reports/*.xml'
-                }
             }
         }
         stage('Deliver') {
             steps {
-                sshagent(credentials: ['your-ssh-credentials-id']) {
+                sshagent(credentials: ['ssh-1']) {
                     sh './jenkins/scripts/deliver.sh'
                 }
             }
