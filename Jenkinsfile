@@ -3,9 +3,9 @@ pipeline {
         label 'ssh-agent' // Replace with your agent's label
     }
 
-    tools {
-        maven 'maven'
-        jdk 'java'
+     environment {
+        MAVEN_HOME = '/opt/maven'  // Set this to your Maven installation path
+        PATH = "$MAVEN_HOME/bin:$PATH"  // Add Maven to the PATH
     }
 
     stages {
