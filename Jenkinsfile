@@ -2,6 +2,12 @@ pipeline {
     agent {
         label 'ssh-agent' // Replace with your agent's label
     }
+
+    tools {
+        maven 'maven'
+        jdk 'java'
+    }
+
     stages {
         stage('Build') {
             steps {
