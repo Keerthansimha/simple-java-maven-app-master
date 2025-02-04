@@ -5,7 +5,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sshagent(credentials: ['your-ssh-credentials-id']) {
+                sshagent(credentials: ['ssh-agent']) {
                     sh 'mvn -B -DskipTests clean package'
                 }
             }
