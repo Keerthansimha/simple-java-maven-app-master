@@ -1,19 +1,20 @@
 pipeline {
     agent {
-        docker {
-            image 'maven:3.9.0'
-            args '-v /root/.m2:/root/.m2'
-        }
+        label 'ssh-agent' // Replace with your agent's label
     }
     stages {
         stage('Build') {
             steps {
-                sh 'mvn -B -DskipTests clean package'
+                sshagent(credentials: ['your-ssh-credentials-id']) {
+                    sh 'mvn -B -DskipTests clean package'
+                }
             }
         }
         stage('Test') {
             steps {
-                sh 'mvn test'
+                sshagent(credentials: ['your-ssh-credentials-id']) {
+                    sh 'mvn test'
+                }
             }
             post {
                 always {
@@ -23,7 +24,9 @@ pipeline {
         }
         stage('Deliver') {
             steps {
-                sh './jenkins/scripts/deliver.sh'
+                sshagent(credentials: ['your-ssh-credentials-id']) {
+                    sh './jenkins/scripts/deliver.sh'
+                }
             }
         }
     }
