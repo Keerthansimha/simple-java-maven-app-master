@@ -20,16 +20,5 @@ pipeline {
                 sh 'mvn test'
             }
         }
-
-        stage('Deliver') {
-            agent {
-                label 'ssh-1' // Run this stage on the 'ssh-1' agent
-            }
-            steps {
-                // Ensure the script is executable
-                sh 'chmod +x ./jenkins/scripts/deliver.sh'
-                sh './jenkins/scripts/deliver.sh'
-            }
-        }
     }
 }
