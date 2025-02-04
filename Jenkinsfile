@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        label 'ssh-agent' // Replace with your agent's label
+        label 'ssh-agent' // Default agent for the pipeline
     }
 
     environment {
@@ -11,22 +11,22 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-               
                 sh 'mvn -B -DskipTests clean package'
             }
         }
         
         stage('Test') {
             steps {
-                sh 'mvn test'  // Running tests without SSH agent
+                sh 'mvn test'
             }
         }
-        
+
         stage('Deliver') {
+            agent {
+                label 'ssh-1' // Run this stage on the 'ssh-1' agent
+            }
             steps {
-                sshagent(credentials: ['ssh-1']) {  // Use ssh-1 for Deliver stage
-                    sh './jenkins/scripts/deliver.sh'
-                }
+                sh './jenkins/scripts/deliver.sh'
             }
         }
     }
