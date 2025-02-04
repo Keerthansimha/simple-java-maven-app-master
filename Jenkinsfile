@@ -11,9 +11,8 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sshagent(credentials: ['ssh-agent']) {  // Use ssh-agent for Build
-                    sh 'mvn -B -DskipTests clean package'
-                }
+               
+                sh 'mvn -B -DskipTests clean package'
             }
         }
         
